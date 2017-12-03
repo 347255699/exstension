@@ -4,7 +4,7 @@ package org.vertx.exstension.config;
  * const for global.
  * Created by kam on 2017/12/3.
  */
-public enum GlobalConst {
+public enum SysConst {
     /**
      * default path for core property.
      */
@@ -12,7 +12,7 @@ public enum GlobalConst {
     CURR_PROPERTIES_PATH("curr.propertis");
     private String key;
 
-    GlobalConst(String key) {
+    SysConst(String key) {
         this.key = key;
     }
 
