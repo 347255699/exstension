@@ -10,7 +10,7 @@ public enum SysConst {
      */
     DEFAULT_PROPERTIES_PATH("core.properties"),
     CURR_PROPERTIES_PATH("curr.properties"),
-    CURR_LOG("curr.log.factory");
+    CURR_LOGGING_FACTORY("curr.logging.factory");
     private String key;
 
     SysConst(String key) {

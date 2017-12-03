@@ -3,7 +3,6 @@ package org.vertx.exstension.config;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
-import org.vertx.exstension.service.LaunchService;
 import org.vertx.exstension.utils.PropertiesLoader;
 
 /**
@@ -30,7 +29,7 @@ public class Configurator {
 
     private static void initSysConfigurator() {
         System.setProperty("vertx.logger-delegate-factory-class-name",
-                PROPERTIES.getString(SysConst.CURR_LOG.getKey()));
+                PROPERTIES.getString(SysConst.CURR_LOGGING_FACTORY.getKey()));
         logger.info("the system configurator init over.");
     }
 
