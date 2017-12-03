@@ -5,4 +5,4 @@ The exstension is a tool collection for vertx.
 
 1.launcher
 
-    用于启动单个vert.x应用的启动器，内置properties配置文件加载，web服务器启动的简单功能。
+    用于启动单个vert.x应用的启动器，内置properties配置文件加载，web服务器启动等简单功能。
