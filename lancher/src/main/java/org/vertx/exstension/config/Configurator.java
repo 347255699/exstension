@@ -8,6 +8,9 @@ import org.vertx.exstension.utils.PropertiesLoader;
  * Created by kam on 2017/12/3.
  */
 public class Configurator {
+    /**
+     * configuration for web container
+     **/
     private static int DEFAULT_WEB_PORT = 80;
     private static int HTTP_PORT = DEFAULT_WEB_PORT;
 

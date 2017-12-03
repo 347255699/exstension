@@ -16,8 +16,4 @@ public enum WebConst {
         return key;
     }
 
-    public void setKey(String key) {
-        this.key = key;
-    }
-
 }
