@@ -9,7 +9,6 @@ import org.vertx.exstension.holder.VertxHolder;
  */
 public class LancherVerticle extends AbstractVerticle {
     public void start() {
-        VertxHolder.setVertx(vertx);
         VertxHolder.vertx().deployVerticle(WebVerticle.class.getName());
     }
 }
