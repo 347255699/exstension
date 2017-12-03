@@ -3,6 +3,7 @@ package org.vertx.exstension.config;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.vertx.exstension.utils.PropertiesLoader;
 
 /**
@@ -13,17 +14,14 @@ public class Configurator {
     private static final Logger logger = LoggerFactory.getLogger(Configurator.class);
     private static final int DEFAULT_WEB_PORT = 80;
     private static int HTTP_PORT = DEFAULT_WEB_PORT;
-    private static JsonObject SUB_PROPERTIES;
     private static JsonObject PROPERTIES;
 
-    public static void init() {
+    public static void init(String propPath) {
         logger.info("the configurator is Initialization.");
-        PROPERTIES = new PropertiesLoader(SysConst.DEFAULT_PROPERTIES_PATH.getKey()).asJson();
-        if (PROPERTIES.containsKey(SysConst.CURR_PROPERTIES_PATH.getKey()))
-            SUB_PROPERTIES = new PropertiesLoader(PROPERTIES.getString(SysConst.CURR_PROPERTIES_PATH.getKey()))
-                    .asJson();
+        PROPERTIES = new PropertiesLoader(StringUtils.isNoneEmpty(propPath) ?
+                propPath : SysConst.DEFAULT_PROPERTIES_PATH.getKey()).asJson();
         initSysConfigurator();
-        initWebConfigurator(SUB_PROPERTIES);
+        initWebConfigurator(PROPERTIES);
         logger.info("the configurator init over.");
     }
 
@@ -49,6 +47,6 @@ public class Configurator {
      * @return
      */
     public static JsonObject properties() {
-        return SUB_PROPERTIES;
+        return PROPERTIES;
     }
 }

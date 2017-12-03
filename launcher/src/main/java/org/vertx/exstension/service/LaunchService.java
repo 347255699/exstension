@@ -16,9 +16,9 @@ public class LaunchService {
     /**
      * lanch local vertx.
      */
-    public static void launchLocal() {
+    public static void launchLocal(String propPath) {
         logger.info("the system is launching now.");
-        Configurator.init();
+        Configurator.init(propPath);
         VertxHolder.setVertx(Vertx.vertx());
         VertxHolder.vertx().deployVerticle(LauncherVerticle.class.getName());
         logger.info("the system launch over.");

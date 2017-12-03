@@ -8,10 +8,6 @@ import org.vertx.exstension.service.LaunchService;
  */
 public class ApplicationMain {
     public static void main(String[] args) {
-        for (String str : args) {
-            System.out.println(str);
-        }
-
-        LaunchService.launchLocal();
+        LaunchService.launchLocal(args.length > 0 ? args[0] : null);
     }
 }
