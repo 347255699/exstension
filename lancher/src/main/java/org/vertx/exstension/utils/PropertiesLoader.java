@@ -64,7 +64,7 @@ public class PropertiesLoader {
      *
      * @return
      */
-    public Map<String, Object> map() {
+    public Map<String, Object> asMap() {
         Map<String, Object> propertiesMap = new HashMap<>(prop.size(), 1f);
         Enumeration enumeration = prop.propertyNames();
         while (enumeration.hasMoreElements()) {
@@ -79,7 +79,7 @@ public class PropertiesLoader {
      *
      * @return
      */
-    public JsonObject json() {
-        return new JsonObject(map());
+    public JsonObject asJson() {
+        return new JsonObject(asMap());
     }
 }

@@ -1,7 +1,7 @@
 package org.vertx.exstension.verticle;
 
 import io.vertx.core.AbstractVerticle;
-import org.vertx.exstension.config.Configurator;
+import org.vertx.exstension.config.WebConfigurator;
 import org.vertx.exstension.holder.VertxHolder;
 
 /**
@@ -15,6 +15,6 @@ public class WebVerticle extends AbstractVerticle {
             req.response()
                     .putHeader("content-type", "text/plain")
                     .end("Hello World!");
-        }).listen(Configurator.getHttpPort());
+        }).listen(WebConfigurator.getHttpPort());
     }
 }
