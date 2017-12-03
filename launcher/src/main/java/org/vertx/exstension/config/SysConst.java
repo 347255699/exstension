@@ -8,8 +8,9 @@ public enum SysConst {
     /**
      * default path for core property.
      */
-    DEFAULT_PROPERTIES_PATH("core.propertis"),
-    CURR_PROPERTIES_PATH("curr.propertis");
+    DEFAULT_PROPERTIES_PATH("core.properties"),
+    CURR_PROPERTIES_PATH("curr.properties"),
+    CURR_LOG("curr.log.factory");
     private String key;
 
     SysConst(String key) {
