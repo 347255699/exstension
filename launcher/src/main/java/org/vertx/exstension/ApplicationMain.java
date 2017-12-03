@@ -1,12 +1,13 @@
 package org.vertx.exstension;
 
-import org.vertx.exstension.service.LanchService;
+
+import org.vertx.exstension.service.LaunchService;
 
 /**
  * Created by kam on 2017/12/3.
  */
 public class ApplicationMain {
     public static void main(String[] args) {
-        LanchService.lanchLocal();
+        LaunchService.lanchLocal();
     }
 }
