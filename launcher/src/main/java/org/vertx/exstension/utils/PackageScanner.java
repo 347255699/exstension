@@ -1,6 +1,6 @@
 package org.vertx.exstension.utils;
 
-import org.vertx.exstension.config.route.Route;
+import org.vertx.exstension.route.Route;
 
 import java.io.File;
 import java.util.HashSet;
@@ -74,11 +74,5 @@ public class PackageScanner<T> {
             }
         }
         return classNames;
-    }
-
-    public static void main(String[] args) {
-        String packageName = "org.vertx.exstension.config.route";
-        new PackageScanner<Route>().scan(packageName, Route.class)
-                .forEach(System.out::println);
     }
 }

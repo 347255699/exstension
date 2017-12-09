@@ -5,7 +5,9 @@ package org.vertx.exstension.config;
  * Created by kam on 2017/12/3.
  */
 public enum WebConst {
-    HTTP_PORT("web.listen.port");
+    HTTP_PORT("web.listen.port"),
+    ROUTE_PACKAGE("web.route.package");
+
     private String key;
 
     WebConst(String key) {
