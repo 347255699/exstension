@@ -21,7 +21,7 @@ public class WebVerticle extends AbstractVerticle {
         logger.info("scanning route package now.");
         new PackageScanner<Route>()
                 .scan(Configurator.properties().getString(WebConst.ROUTE_PACKAGE.getKey()), Route.class);
-        logger.info("scanning route package end.");
+        logger.info("scanning route package over.");
         VertxHolder.vertx().createHttpServer().requestHandler(req -> {
             req.response()
                     .putHeader("content-type", "text/plain")

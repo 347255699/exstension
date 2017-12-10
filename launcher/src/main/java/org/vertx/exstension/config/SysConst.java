@@ -9,7 +9,8 @@ public enum SysConst {
      * default path for core property.
      */
     DEFAULT_PROPERTIES_PATH("config.properties"),
-    CURR_LOGGING_FACTORY("curr.logging.factory");
+    SYS_LOGGING_FACTORY("sys.logging.factory"),
+    SYS_VERTICLE_PACKAGE("sys.verticle.package");
     private String key;
 
     SysConst(String key) {

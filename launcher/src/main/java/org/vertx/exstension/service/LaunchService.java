@@ -17,18 +17,19 @@ public class LaunchService {
      * lanch local vertx with a properties path.
      */
     public static void launchLocal(String propPath) {
-        logger.info("the system is launching now.");
         Configurator.init(propPath);
-        VertxHolder.setVertx(Vertx.vertx());
-        VertxHolder.vertx().deployVerticle(LauncherVerticle.class.getName());
-        logger.info("the system launch over.");
+        common();
     }
     /**
      * lanch local vertx use default properties path.
      */
     public static void launchLocal() {
-        logger.info("the system is launching now.");
         Configurator.init();
+        common();
+    }
+
+    private static void common(){
+        logger.info("the system is launching now.");
         VertxHolder.setVertx(Vertx.vertx());
         VertxHolder.vertx().deployVerticle(LauncherVerticle.class.getName());
         logger.info("the system launch over.");

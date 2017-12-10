@@ -17,16 +17,17 @@ public class Configurator {
     private static JsonObject PROPERTIES;
 
     public static void init(String propPath) {
-        logger.info("the configurator is Initialization.");
         PROPERTIES = new PropertiesLoader(StringUtils.isNoneEmpty(propPath) ?
                 propPath : SysConst.DEFAULT_PROPERTIES_PATH.getKey()).asJson();
-        initSysConfigurator();
-        initWebConfigurator(PROPERTIES);
-        logger.info("the configurator init over.");
+        common();
     }
     public static void init() {
-        logger.info("the configurator is Initialization.");
         PROPERTIES = new PropertiesLoader(SysConst.DEFAULT_PROPERTIES_PATH.getKey()).asJson();
+        common();
+    }
+
+    private static void common(){
+        logger.info("the configurator is Initialization.");
         initSysConfigurator();
         initWebConfigurator(PROPERTIES);
         logger.info("the configurator init over.");
@@ -34,7 +35,7 @@ public class Configurator {
 
     private static void initSysConfigurator() {
         System.setProperty("vertx.logger-delegate-factory-class-name",
-                PROPERTIES.getString(SysConst.CURR_LOGGING_FACTORY.getKey()));
+                PROPERTIES.getString(SysConst.SYS_LOGGING_FACTORY.getKey()));
         logger.info("the system configurator init over.");
     }
 
