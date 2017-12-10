@@ -1,11 +1,13 @@
 package org.vertx.exstension.service;
 
+import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import org.vertx.exstension.config.Configurator;
+import org.vertx.exstension.config.SysConst;
 import org.vertx.exstension.holder.VertxHolder;
-import org.vertx.exstension.verticle.LauncherVerticle;
+import org.vertx.exstension.utils.PackageScanner;
 
 /**
  * service for lanch
@@ -16,23 +18,28 @@ public class LaunchService {
     /**
      * lanch local vertx with a properties path.
      */
-    public static void launchLocal(String propPath) {
+    public void launchLocal(String propPath) {
         Configurator.init(propPath);
-        common();
+        launch();
     }
     /**
      * lanch local vertx use default properties path.
      */
-    public static void launchLocal() {
+    public void launchLocal() {
         Configurator.init();
-        common();
+        launch();
     }
 
-    private static void common(){
+    private void launch(){
         logger.info("the system is launching now.");
         VertxHolder.setVertx(Vertx.vertx());
-        VertxHolder.vertx().deployVerticle(LauncherVerticle.class.getName());
+        logger.info("scanning verticle package now.");
+        new PackageScanner<AbstractVerticle>()
+                .scan(Configurator.properties().getString(SysConst.SYS_VERTICLE_PACKAGE.getKey()), AbstractVerticle.class)
+                .forEach(VertxHolder.vertx() :: deployVerticle);
+        logger.info("scanning verticle package over.");
         logger.info("the system launch over.");
     }
+
 
 }

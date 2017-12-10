@@ -12,41 +12,24 @@ import org.vertx.exstension.utils.PropertiesLoader;
  */
 public class Configurator {
     private static final Logger logger = LoggerFactory.getLogger(Configurator.class);
-    private static final int DEFAULT_WEB_PORT = 80;
-    private static int HTTP_PORT = DEFAULT_WEB_PORT;
     private static JsonObject PROPERTIES;
 
     public static void init(String propPath) {
+        logger.info("the system configurator init start.");
         PROPERTIES = new PropertiesLoader(StringUtils.isNoneEmpty(propPath) ?
                 propPath : SysConst.DEFAULT_PROPERTIES_PATH.getKey()).asJson();
-        common();
+        initSysConfigurator();
     }
     public static void init() {
+        logger.info("the system configurator init start.");
         PROPERTIES = new PropertiesLoader(SysConst.DEFAULT_PROPERTIES_PATH.getKey()).asJson();
-        common();
-    }
-
-    private static void common(){
-        logger.info("the configurator is Initialization.");
         initSysConfigurator();
-        initWebConfigurator(PROPERTIES);
-        logger.info("the configurator init over.");
     }
 
     private static void initSysConfigurator() {
         System.setProperty("vertx.logger-delegate-factory-class-name",
                 PROPERTIES.getString(SysConst.SYS_LOGGING_FACTORY.getKey()));
         logger.info("the system configurator init over.");
-    }
-
-    private static void initWebConfigurator(JsonObject subProperties) {
-        HTTP_PORT = subProperties.size() > 0 && subProperties.containsKey(WebConst.HTTP_PORT.getKey()) ?
-                Integer.parseInt(subProperties.getString(WebConst.HTTP_PORT.getKey())) : DEFAULT_WEB_PORT;
-        logger.info("the web configurator init over.");
-    }
-
-    public static int getHttpPort() {
-        return HTTP_PORT;
     }
 
     /**
@@ -57,4 +40,5 @@ public class Configurator {
     public static JsonObject properties() {
         return PROPERTIES;
     }
+
 }
