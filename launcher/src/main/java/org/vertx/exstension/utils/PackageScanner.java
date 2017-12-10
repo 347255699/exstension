@@ -1,7 +1,5 @@
 package org.vertx.exstension.utils;
 
-import org.vertx.exstension.route.Route;
-
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +13,7 @@ public class PackageScanner<T> {
     private static final String FILE_SEPARATOR = System.getProperty("file.separator");
 
     /**
-     * 扫描包中符合指定类型的类
+     * scanning the package if the target class are we want.
      *
      * @param packageName
      * @param tClass
@@ -28,7 +26,7 @@ public class PackageScanner<T> {
     }
 
     /**
-     * 实例化所有Route
+     * instantiation all the route object.
      *
      * @param classNames
      * @return
@@ -51,7 +49,7 @@ public class PackageScanner<T> {
     }
 
     /**
-     * 扫描文件夹，加载class文件名
+     * scanning folder and get the class name.
      *
      * @param mainFilePath
      * @param mainFileName

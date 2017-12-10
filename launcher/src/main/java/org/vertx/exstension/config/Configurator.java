@@ -24,6 +24,13 @@ public class Configurator {
         initWebConfigurator(PROPERTIES);
         logger.info("the configurator init over.");
     }
+    public static void init() {
+        logger.info("the configurator is Initialization.");
+        PROPERTIES = new PropertiesLoader(SysConst.DEFAULT_PROPERTIES_PATH.getKey()).asJson();
+        initSysConfigurator();
+        initWebConfigurator(PROPERTIES);
+        logger.info("the configurator init over.");
+    }
 
     private static void initSysConfigurator() {
         System.setProperty("vertx.logger-delegate-factory-class-name",
