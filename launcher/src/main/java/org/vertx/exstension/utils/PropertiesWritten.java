@@ -28,7 +28,7 @@ public class PropertiesWritten {
         try {
             OutputStream out = new FileOutputStream(propPath);
             prop.put(k, v);
-            prop.store(out, "update".concat(k).concat("property."));
+            prop.store(out, "update ".concat(k).concat(" property."));
         } catch (Exception e) {
             throw e.getCause();
         }
