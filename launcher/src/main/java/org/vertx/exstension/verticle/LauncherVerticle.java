@@ -19,7 +19,8 @@ public class LauncherVerticle extends AbstractVerticle {
         VertxHolder.vertx().deployVerticle(WebVerticle.class.getName());
         logger.info("scanning verticle package now.");
         new PackageScanner<AbstractVerticle>()
-                .scan(Configurator.properties().getString(SysConst.SYS_VERTICLE_PACKAGE.getKey()), AbstractVerticle.class);
+                .scan(Configurator.properties().getString(SysConst.SYS_VERTICLE_PACKAGE.getKey()), AbstractVerticle.class)
+                .forEach(VertxHolder.vertx() :: deployVerticle);
         logger.info("scanning verticle package over.");
     }
 }
