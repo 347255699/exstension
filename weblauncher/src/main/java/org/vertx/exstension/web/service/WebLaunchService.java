@@ -35,12 +35,12 @@ public class WebLaunchService {
         Router router = Router.router(VertxHolder.vertx());
         new PackageScanner<Route>().scan(config.getString(WebConst.WEB_ROUTE_PACKAGE.getKey()), Route.class)
                 .forEach(route -> route.route(router));
-        int httpPort = StringUtils.isEmpty(config.getString(WebConst.WEB_LISTEN_PORT.getKey()))?
+        int httpPort = StringUtils.isEmpty(config.getString(WebConst.WEB_LISTEN_PORT.getKey())) ?
                 80 : Integer.parseInt(config.getString(WebConst.WEB_LISTEN_PORT.getKey()));
         VertxHolder.vertx().createHttpServer().requestHandler(router::accept)
                 .listen(httpPort);
         logger.info("the web server launch over.");
-        logger.info("the web server launch port is {}.", String.valueOf(httpPort));
+        logger.info("the web server launch port is ".concat(String.valueOf(httpPort)));
     }
 
 }
