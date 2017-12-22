@@ -1,8 +1,11 @@
 # exstension
-The exstension is a tool collection for vertx.
+>The exstension is a tool collection for build vertx application.
 
-描述：exstension工具包，基于vert.x组件开发，目的在于简化vert.x的代码量。
+>exstension工具包，基于vert.x组件开发，目的在于简化vert.x应用的构建。
 
-1.launcher
+## launcher
+内置多种初始化操作，如类包扫描加载，properties配置文件加载。Verticle扫描部署等基本操作。
 
-    用于启动单个vert.x应用的启动器，内置properties配置文件加载，web服务器启动等简单功能。
+## web-launcher
+由launcher扩展而来，包含Route扫描加载，单个HTTP Server的启动。
+
