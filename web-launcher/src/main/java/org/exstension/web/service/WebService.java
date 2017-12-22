@@ -18,30 +18,34 @@ import org.exstension.web.route.Route;
 public class WebService {
     private static final Logger logger = LoggerFactory.getLogger(WebService.class);
 
-    private static void launchPre(String propPath){
-        if(propPath != null)
+    private static void launchPre(String propPath) {
+        if (propPath != null)
             SysConfigHolder.init(propPath);
         else SysConfigHolder.init(null);
-        System.setProperty("vertx.logger-delegate-factory-class-name",SysConfigHolder.sysLoggingFactory());
+        System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
         SysHolder.setVertx(Vertx.vertx());
     }
 
     /**
      * if use default properties path,just give the propPath null.
+     *
      * @param propPath
      */
-    public static void launch(String propPath){
-        if(propPath != null)
+    public static void launch(String propPath) {
+        if (propPath != null)
             launchPre(propPath);
         else launchPre(null);
         launchVerticle();
         launchWebServer();
     }
 
-    private static void launchVerticle(){
+    private static void launchVerticle() {
         logger.info("all the verticle launch now.");
         new PackageScanner<Verticle>().scan(SysConfigHolder.sysVerticlePackage(), Verticle.class)
-                .forEach(verticle -> SysHolder.vertx().deployVerticle(verticle));
+                .forEach(verticle -> {
+                    logger.info("deploy verticle -> ".concat(verticle.getClass().getName()));
+                    SysHolder.vertx().deployVerticle(verticle);
+                });
         logger.info("all the verticle launch over.");
     }
 
@@ -49,7 +53,10 @@ public class WebService {
         logger.info("the web server launch now.");
         Router router = Router.router(SysHolder.vertx());
         new PackageScanner<Route>().scan(SysConfigHolder.webRoutePackage(), Route.class)
-                .forEach(route -> route.route(router));
+                .forEach(route -> {
+                    logger.info("deploy route -> ".concat(route.getClass().getName()));
+                    route.route(router);
+                });
         int httpPort = StringUtils.isEmpty(SysConfigHolder.webListenPort()) ?
                 80 : Integer.parseInt(SysConfigHolder.webListenPort());
         SysHolder.vertx().createHttpServer().requestHandler(router::accept)
