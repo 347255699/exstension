@@ -1,4 +1,4 @@
-package org.exstension.base.web.route;
+package org.exstension.web.route;
 
 import io.vertx.ext.web.Router;
 

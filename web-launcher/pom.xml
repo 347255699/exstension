@@ -16,7 +16,7 @@
         </dependency>
         <dependency>
             <groupId>org.vertx.exstension</groupId>
-            <artifactId>launcher</artifactId>
+            <artifactId>base</artifactId>
             <version>1.1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

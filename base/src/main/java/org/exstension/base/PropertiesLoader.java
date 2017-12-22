@@ -53,7 +53,7 @@ public class PropertiesLoader {
      * @param k
      * @return
      */
-    public String value(String k) {
+    public String val(String k) {
         return prop.getProperty(k);
     }
 
@@ -62,8 +62,8 @@ public class PropertiesLoader {
      *
      * @return
      */
-    public Map<String, String> asMap() {
-        Map<String, String> propertiesMap = new HashMap<>(prop.size(), 1f);
+    public Map<String, Object> asMap() {
+        Map<String, Object> propertiesMap = new HashMap<>(prop.size(), 1f);
         Enumeration enumeration = prop.propertyNames();
         while (enumeration.hasMoreElements()) {
             String key = (String) enumeration.nextElement();

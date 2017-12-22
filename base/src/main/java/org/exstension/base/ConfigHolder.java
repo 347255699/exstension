@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by kam on 2017/12/3.
  */
 public class ConfigHolder {
-    private static Map<String, String> PROPERTIES;
+    private static Map<String, Object> PROPERTIES;
     private static String DEFAULT_PROPERTIES_PATH = "config.properties";
 
     /**
@@ -34,7 +34,7 @@ public class ConfigHolder {
      *
      * @return
      */
-    public static Map<String, String> properties() {
+    public static Map<String, Object> properties() {
         return PROPERTIES;
     }
 
@@ -43,7 +43,7 @@ public class ConfigHolder {
      * @param k
      * @return
      */
-    public static String val(String k){
+    public static Object val(String k){
         if(PROPERTIES != null && PROPERTIES.size() > 0)
             return PROPERTIES.get(k);
         else throw new RuntimeException("The properties not initialization or empty.");
