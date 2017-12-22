@@ -10,7 +10,7 @@ import org.vertx.exstension.holder.VertxHolder;
 import org.vertx.exstension.utils.PackageScanner;
 
 /**
- * service for lanch
+ * service for launch
  * Created by kam on 2017/12/3.
  */
 public class LaunchService {
