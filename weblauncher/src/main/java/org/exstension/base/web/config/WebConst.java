@@ -1,4 +1,4 @@
-package org.vertx.exstension.web.config;
+package org.exstension.base.web.config;
 
 /**
  * Created by kam on 2017/12/10.

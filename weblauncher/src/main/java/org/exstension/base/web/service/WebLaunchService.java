@@ -1,16 +1,16 @@
-package org.vertx.exstension.web.service;
+package org.exstension.base.web.service;
 
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import org.apache.commons.lang3.StringUtils;
-import org.vertx.exstension.config.Configurator;
+import org.exstension.base.ConfigHolder;
+import org.exstension.base.PackageScanner;
+import org.exstension.base.web.route.Route;
 import org.vertx.exstension.holder.VertxHolder;
 import org.vertx.exstension.service.LaunchService;
-import org.vertx.exstension.utils.PackageScanner;
-import org.vertx.exstension.web.config.WebConst;
-import org.vertx.exstension.web.route.Route;
+import org.exstension.base.web.config.WebConst;
 
 /**
  * launch service for web server.
@@ -30,7 +30,7 @@ public class WebLaunchService {
     }
 
     private void launchWebServer() {
-        JsonObject config = Configurator.properties();
+        JsonObject config = ConfigHolder.properties();
         logger.info("the web server launch now.");
         Router router = Router.router(VertxHolder.vertx());
         new PackageScanner<Route>().scan(config.getString(WebConst.WEB_ROUTE_PACKAGE.getKey()), Route.class)

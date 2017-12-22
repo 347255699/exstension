@@ -1,4 +1,4 @@
-package org.vertx.exstension.utils;
+package org.exstension.base;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * The property file write utils.
+ * the property file write utils.
  * Created by kam on 2017/12/3.
  */
 public class PropertiesWritten {
