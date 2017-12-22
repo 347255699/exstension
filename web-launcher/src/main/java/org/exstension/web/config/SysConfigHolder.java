@@ -14,6 +14,7 @@ public class SysConfigHolder {
     private static String SYS_VERTICLE_PACKAGE = "sys.verticle.package";
 
     /**
+     *y
      * initialization system config.
      * @param propPath
      */
@@ -32,7 +33,7 @@ public class SysConfigHolder {
     }
 
     public static String sysVerticlePackage(){
-        return String.valueOf(SYS_VERTICLE_PACKAGE);
+        return String.valueOf(ConfigHolder.val(SYS_VERTICLE_PACKAGE));
     }
 
     public static String webListenPort(){

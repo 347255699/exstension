@@ -18,7 +18,7 @@ import org.exstension.web.route.Route;
 public class WebService {
     private static final Logger logger = LoggerFactory.getLogger(WebService.class);
 
-    private void launchPre(String propPath){
+    private static void launchPre(String propPath){
         if(propPath != null)
             SysConfigHolder.init(propPath);
         else SysConfigHolder.init(null);
@@ -30,7 +30,7 @@ public class WebService {
      * if use default properties path,just give the propPath null.
      * @param propPath
      */
-    public void launch(String propPath){
+    public static void launch(String propPath){
         if(propPath != null)
             launchPre(propPath);
         else launchPre(null);
@@ -38,14 +38,14 @@ public class WebService {
         launchWebServer();
     }
 
-    private void launchVerticle(){
+    private static void launchVerticle(){
         logger.info("all the verticle launch now.");
         new PackageScanner<Verticle>().scan(SysConfigHolder.sysVerticlePackage(), Verticle.class)
                 .forEach(verticle -> SysHolder.vertx().deployVerticle(verticle));
         logger.info("all the verticle launch over.");
     }
 
-    private void launchWebServer() {
+    private static void launchWebServer() {
         logger.info("the web server launch now.");
         Router router = Router.router(SysHolder.vertx());
         new PackageScanner<Route>().scan(SysConfigHolder.webRoutePackage(), Route.class)
