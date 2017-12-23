@@ -40,6 +40,7 @@ propertes文件配置清单：
 * Http 监听端口：web.listen.port=8080
 * Route 对象扫描和实例化，Route 对象所在的包：web.route.package=org.demo.route
 * Verticle 对象部署，Verticle 对象所在的包：sys.verticle.package=org.demo.verticle
+* 启用日志框架，sys.logging.factory=io.vertx.core.logging.SLF4JLogDelegateFactory
 
 Step2，通过 `WebService` 的静态方法 `launch` 来启动服务和部署Verticle。
 ```java
@@ -48,7 +49,7 @@ WebService.launch("config.propertes");
 若采用默认 properties 文件的加载路径，直接调用 `launch` 方法即可，无需传入参数。默认加载路径为 classpath 路径下的 `config.properties`。
 
 ```java
-WebService.launch(null);
+WebService.launch();
 ```
 另外，该扩展包提供了 Vertx 对象的持有者，可通过 `SysHolder` 的静态方法 `vertx()` 来取得 Vertx 对象，同样可以通过 `SysHolder` 的静态方法 `eventBus` 来取得 EventBus 对象。
 
