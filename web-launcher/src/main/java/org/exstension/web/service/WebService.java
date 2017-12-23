@@ -22,7 +22,8 @@ public class WebService {
         if (propPath != null)
             SysConfigHolder.init(propPath);
         else SysConfigHolder.init(null);
-        System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
+        if (!StringUtils.isEmpty(SysConfigHolder.sysLoggingFactory()))
+            System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
         // this step must after setting logger factory system property.
         logger = LoggerFactory.getLogger(WebService.class);
         SysHolder.setVertx(Vertx.vertx());
@@ -49,23 +50,27 @@ public class WebService {
     }
 
     private static void launchVerticle() {
-        logger.info("all the verticle launch now.");
-        new PackageScanner<Verticle>().scan(SysConfigHolder.sysVerticlePackage(), Verticle.class)
-                .forEach(verticle -> {
-                    logger.info("deploy verticle -> ".concat(verticle.getClass().getName()));
-                    SysHolder.vertx().deployVerticle(verticle);
-                });
-        logger.info("all the verticle launch over.");
+        if (!StringUtils.isEmpty(SysConfigHolder.sysVerticlePackage())) {
+            logger.info("all the verticle launch now.");
+            new PackageScanner<Verticle>().scan(SysConfigHolder.sysVerticlePackage(), Verticle.class)
+                    .forEach(verticle -> {
+                        logger.info("deploy verticle -> ".concat(verticle.getClass().getName()));
+                        SysHolder.vertx().deployVerticle(verticle);
+                    });
+            logger.info("all the verticle launch over.");
+        }
     }
 
     private static void launchWebServer() {
         logger.info("the web server launch now.");
         Router router = Router.router(SysHolder.vertx());
-        new PackageScanner<Route>().scan(SysConfigHolder.webRoutePackage(), Route.class)
-                .forEach(route -> {
-                    logger.info("deploy route -> ".concat(route.getClass().getName()));
-                    route.route(router);
-                });
+        if (!StringUtils.isEmpty(SysConfigHolder.sysVerticlePackage())) {
+            new PackageScanner<Route>().scan(SysConfigHolder.webRoutePackage(), Route.class)
+                    .forEach(route -> {
+                        logger.info("deploy route -> ".concat(route.getClass().getName()));
+                        route.route(router);
+                    });
+        }
         int httpPort = StringUtils.isEmpty(SysConfigHolder.webListenPort()) ?
                 80 : Integer.parseInt(SysConfigHolder.webListenPort());
         SysHolder.vertx().createHttpServer().requestHandler(router::accept)
