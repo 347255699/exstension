@@ -1,6 +1,7 @@
 .idea
 *.iml
-lancher/target
-weblauncher/target
+base/target
+web-launcher/target
 target
 logs
+
