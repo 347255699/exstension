@@ -4,7 +4,7 @@
 ## base
 > 基础工具包，仅依赖了 `commons-lang3` 工具包，用于扫描 properties 和加载配置文件内容，并提供包扫描器，用于快速扫描和实例化某包下的类，如用于统一部署 Veticle 实例。
 
-实例化某包下一类对象，可使用 `PackageScanner` 实例对象的 `scan` 方法。
+实例化某包下同一类对象，可使用 `PackageScanner` 实例对象的 `scan` 方法。
 
 统一扫描和部署 Verticle 实例：  
 ```java
