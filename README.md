@@ -40,7 +40,7 @@ propertes文件配置清单：
 * Http 监听端口：web.listen.port=8080
 * Route 对象扫描和实例化，Route 对象所在的包：web.route.package=org.demo.route
 * Verticle 对象部署，Verticle 对象所在的包：sys.verticle.package=org.demo.verticle
-* 启用日志框架，sys.logging.factory=io.vertx.core.logging.SLF4JLogDelegateFactory
+* 启用日志框架，若不配置该参数则启用 JDK(JUL)： sys.logging.factory=io.vertx.core.logging.SLF4JLogDelegateFactory
 
 Step2，通过 `WebService` 的静态方法 `launch` 来启动服务和部署Verticle。
 ```java
