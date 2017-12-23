@@ -45,7 +45,7 @@ Step2，通过 `WebService` 的静态方法 `launch` 来启动服务和部署Ver
 ```java
 WebService.launch("config.propertes");
 ```
-若采用默认 properties 文件的加载路径，给 `launch` 方法传入参数 `null` 即可。默认加载路径为 classpath 路径下的 `config.properties`。
+若采用默认 properties 文件的加载路径，直接调用 `launch` 方法即可，无需传入参数。默认加载路径为 classpath 路径下的 `config.properties`。
 
 ```java
 WebService.launch(null);
