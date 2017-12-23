@@ -16,25 +16,34 @@ import org.exstension.web.route.Route;
  * Created by kam on 2017/12/10.
  */
 public class WebService {
-    private static final Logger logger = LoggerFactory.getLogger(WebService.class);
+    private static Logger logger;
 
     private static void launchPre(String propPath) {
         if (propPath != null)
             SysConfigHolder.init(propPath);
         else SysConfigHolder.init(null);
         System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
+        // this step must after setting logger factory system property.
+        logger = LoggerFactory.getLogger(WebService.class);
         SysHolder.setVertx(Vertx.vertx());
     }
 
     /**
      * if use default properties path,just give the propPath null.
+     */
+    public static void launch() {
+        launchPre(null);
+        launchVerticle();
+        launchWebServer();
+    }
+
+    /**
+     * if use customize properties path,just give the propPath null.
      *
      * @param propPath
      */
     public static void launch(String propPath) {
-        if (propPath != null)
-            launchPre(propPath);
-        else launchPre(null);
+        launchPre(propPath);
         launchVerticle();
         launchWebServer();
     }
