@@ -30,7 +30,7 @@ public class WebService {
     }
 
     /**
-     * if use default properties path,just give the propPath null.
+     * use default properties path.
      */
     public static void launch() {
         launchPre(null);
@@ -39,7 +39,7 @@ public class WebService {
     }
 
     /**
-     * if use customize properties path,just give the propPath null.
+     * use customize properties path.
      *
      * @param propPath
      */
