@@ -2,6 +2,7 @@ package org.exstension.web.service;
 
 import io.vertx.core.Verticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
@@ -18,7 +19,7 @@ import org.exstension.web.route.Route;
 public class WebService {
     private static Logger logger;
 
-    private static void launchPre(String propPath) {
+    private static void launchPre(String propPath, VertxOptions vertxOptions) {
         if (propPath != null)
             SysConfigHolder.init(propPath);
         else SysConfigHolder.init(null);
@@ -26,14 +27,14 @@ public class WebService {
             System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
         // this step must after setting logger factory system property.
         logger = LoggerFactory.getLogger(WebService.class);
-        SysHolder.setVertx(Vertx.vertx());
+        SysHolder.setVertx(vertxOptions == null ? Vertx.vertx() : Vertx.vertx(vertxOptions));
     }
 
     /**
      * use default properties path.
      */
     public static void launch() {
-        launchPre(null);
+        launchPre(null, null);
         launchVerticle();
         launchWebServer();
     }
@@ -44,7 +45,18 @@ public class WebService {
      * @param propPath
      */
     public static void launch(String propPath) {
-        launchPre(propPath);
+        launchPre(propPath, null);
+        launchVerticle();
+        launchWebServer();
+    }
+
+    /**
+     * use customize properties path and vertx options.
+     *
+     * @param propPath
+     */
+    public static void launch(String propPath,VertxOptions vertxOptions) {
+        launchPre(propPath, vertxOptions);
         launchVerticle();
         launchWebServer();
     }
