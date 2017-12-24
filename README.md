@@ -22,11 +22,11 @@ SysConfigHolder.init("config.properties");
 // 返回值为Map<String,Object>类型
 SysConfigHolder.properties();
 ```
-若采用base提供的properties文件默认加载路径，可以给`init`方法传入一个`null`参数。默认加载路径为classpath路径下的`config.properties`。
+若采用base提供的properties文件默认加载路径，调用`init`方法即可。默认加载路径为classpath路径下的`config.properties`。
 
-适用默认加载路径实例：
+使用默认加载路径实例：
 ```java
-SysConfigHolder.init(null);
+SysConfigHolder.init();
 ```
 
 ## web-launcher
