@@ -19,11 +19,17 @@ import org.exstension.web.route.Route;
 public class WebService {
     private static Logger logger;
 
+    /**
+     * ready for launch web service.
+     * @param propPath
+     * @param vertxOptions
+     * @param isCluster
+     */
     private static void launchPre(String propPath, VertxOptions vertxOptions, Boolean isCluster) {
         if (propPath != null)
             SysConfigHolder.init(propPath);
         else SysConfigHolder.init(null);
-        if (!StringUtils.isEmpty(SysConfigHolder.sysLoggingFactory()))
+        if (StringUtils.isNoneEmpty(SysConfigHolder.sysLoggingFactory()))
             System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
         if (isCluster)
             System.setProperty("hazelcast.logging.type", SysConfigHolder.hazelcastLoggingType());
@@ -92,7 +98,7 @@ public class WebService {
     /**
      * use default config and launch with cluster.
      */
-    public static void launchCluter() {
+    public static void launchCluster() {
         launchPre(null, null, true);
     }
 
@@ -101,7 +107,7 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launchCluter(String propPath) {
+    public static void launchCluster(String propPath) {
         launchPre(propPath, null, true);
     }
 
@@ -110,7 +116,7 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launchCluter(String propPath, VertxOptions vertxOptions) {
+    public static void launchCluster(String propPath, VertxOptions vertxOptions) {
         launchPre(propPath, vertxOptions, true);
     }
 
@@ -119,7 +125,7 @@ public class WebService {
      *
      * @param vertxOptions
      */
-    public static void launchCluter(VertxOptions vertxOptions) {
+    public static void launchCluster(VertxOptions vertxOptions) {
         launchPre(null, vertxOptions, true);
     }
 
