@@ -62,6 +62,8 @@ WebService.launchCluster("config/config.properties");
 // 启动集群模式自定义properties路径和vertx选项
 ...
 ```
+> 注意，启用集群模式前，确保classpath路径下已加载hazelcast.jar
+
 另外，该扩展包提供了Vertx对象的持有者，可通过`SysHolder`的静态方法`vertx()`来取得Vertx对象，同样可以通过`SysHolder`的静态方法`eventBus`来取得EventBus对象。
 
 取得Vertx和EventBus实例：
