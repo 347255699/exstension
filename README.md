@@ -40,16 +40,27 @@ propertes文件配置清单：
 * Http监听端口：web.listen.port=8080
 * Route对象扫描和实例化，Route对象所在的包：web.route.package=org.demo.route
 * Verticle对象部署，Verticle对象所在的包：sys.verticle.package=org.demo.verticle
-* 启用日志框架，若不配置该参数则启用JDK(JUL)： sys.logging.factory=io.vertx.core.logging.SLF4JLogDelegateFactory
+* 配置vertx日志框架，若不配置该参数则启用JDK(JUL)： sys.logging.factory=io.vertx.core.logging.SLF4JLogDelegateFactory
+* 配置hazelcast日志框架，若不配置该参数则启用JDK(JUL)：hazelcast.logging.type=slf4j
 
-Step2，通过`WebService`的静态方法`launch`来启动服务和部署Verticle。
-```java
-WebService.launch("config.propertes");
-```
-若采用默认properties文件的加载路径，直接调用`launch`方法即可，无需传入参数。默认加载路径为classpath路径下的`config.properties`。
-
+Step2，通过`WebService`的静态方法`launch`来启动服务和部署Verticle（默认`properties`文件路径为classpath路径下的`config.properties`）。
 ```java
 WebService.launch();
+```
+web-launcher提供多种启动方式。
+```java
+// 启动本地模式和默认配置
+WebService.launch();
+// 启动本地模式自定义properties路径
+WebService.launch("config/config.properties");
+...
+
+// 启动集群模式和默认配置
+WebService.launchCluster();
+// 启动集群模式自定义properties路径
+WebService.launchCluster("config/config.properties");
+// 启动集群模式自定义properties路径和vertx选项
+...
 ```
 另外，该扩展包提供了Vertx对象的持有者，可通过`SysHolder`的静态方法`vertx()`来取得Vertx对象，同样可以通过`SysHolder`的静态方法`eventBus`来取得EventBus对象。
 
