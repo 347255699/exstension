@@ -21,7 +21,14 @@ public class PackageScanner<T> {
      */
     public Set<T> scan(String packageName, Class<T> tClass) {
         String mainFileName = packageName.replace(".", "/");
-        String mainFilePath = PackageScanner.class.getClassLoader().getResource(mainFileName).getPath();
+        String mainFilePath = null;
+        try {
+            mainFilePath = PackageScanner.class.getClassLoader().getResource(mainFileName).getPath();
+        } catch (Exception e) {
+            if (e instanceof NullPointerException) {
+                throw new RuntimeException(packageName.concat(" not exist, please check this package in class path."));
+            }
+        }
         return instantiation(classNames(mainFilePath, mainFileName), tClass);
     }
 

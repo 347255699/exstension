@@ -12,36 +12,41 @@ public class SysConfigHolder {
     private static String WEB_ROUTE_PACKAGE = "web.route.package";
     private static String SYS_LOGGING_FACTORY = "sys.logging.factory";
     private static String SYS_VERTICLE_PACKAGE = "sys.verticle.package";
+    private static String HAZELCAST_LOGGING_TYPE = "hazelcast.logging.type";
 
     /**
-     *y
+     * y
      * initialization system config.
+     *
      * @param propPath
      */
-    public static void init(String propPath){
-        if(propPath == null)
+    public static void init(String propPath) {
+        if (propPath == null)
             ConfigHolder.init();
         else ConfigHolder.init(propPath);
     }
 
-    public static JsonObject asJson(){
+    public static JsonObject asJson() {
         return new JsonObject(ConfigHolder.properties());
     }
 
-    public static String sysLoggingFactory(){
+    public static String sysLoggingFactory() {
         return String.valueOf(ConfigHolder.val(SYS_LOGGING_FACTORY));
     }
 
-    public static String sysVerticlePackage(){
+    public static String sysVerticlePackage() {
         return String.valueOf(ConfigHolder.val(SYS_VERTICLE_PACKAGE));
     }
 
-    public static String webListenPort(){
+    public static String webListenPort() {
         return String.valueOf(ConfigHolder.val(WEB_LISTEN_PORT));
     }
 
-    public static String webRoutePackage(){
+    public static String webRoutePackage() {
         return String.valueOf(ConfigHolder.val(WEB_ROUTE_PACKAGE));
     }
 
+    public static String hazelcastLoggingType() {
+        return String.valueOf(ConfigHolder.val(HAZELCAST_LOGGING_TYPE));
+    }
 }

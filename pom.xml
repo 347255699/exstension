@@ -11,6 +11,8 @@
     <modules>
         <module>base</module>
         <module>web-launcher</module>
+        <module>clusterdemo01</module>
+        <module>clusterdemo02</module>
     </modules>
     <properties>
         <vertx.vertsion>3.4.2</vertx.vertsion>

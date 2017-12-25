@@ -19,22 +19,38 @@ import org.exstension.web.route.Route;
 public class WebService {
     private static Logger logger;
 
-    private static void launchPre(String propPath, VertxOptions vertxOptions) {
+    private static void launchPre(String propPath, VertxOptions vertxOptions, Boolean isCluster) {
         if (propPath != null)
             SysConfigHolder.init(propPath);
         else SysConfigHolder.init(null);
         if (!StringUtils.isEmpty(SysConfigHolder.sysLoggingFactory()))
             System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
+        if (isCluster)
+            System.setProperty("hazelcast.logging.type", SysConfigHolder.hazelcastLoggingType());
         // this step must after setting logger factory system property.
         logger = LoggerFactory.getLogger(WebService.class);
-        SysHolder.setVertx(vertxOptions == null ? Vertx.vertx() : Vertx.vertx(vertxOptions));
+        if (isCluster) {
+            Vertx.clusteredVertx(vertxOptions == null ? new VertxOptions() : vertxOptions, res -> {
+                if (res.succeeded()) {
+                    SysHolder.setVertx(res.result());
+                    logger.info("launch vertx with cluster success.");
+                    launchVerticle();
+                    launchWebServer();
+                } else {
+                    logger.info("launch vertx with cluster fail.");
+                }
+            });
+        } else {
+            SysHolder.setVertx(vertxOptions == null ? Vertx.vertx() : Vertx.vertx(vertxOptions));
+            logger.info("launch local vertx success.");
+        }
     }
 
     /**
-     * use default properties path.
+     * use default config.
      */
     public static void launch() {
-        launchPre(null, null);
+        launchPre(null, null, false);
         launchVerticle();
         launchWebServer();
     }
@@ -45,7 +61,7 @@ public class WebService {
      * @param propPath
      */
     public static void launch(String propPath) {
-        launchPre(propPath, null);
+        launchPre(propPath, null, false);
         launchVerticle();
         launchWebServer();
     }
@@ -54,11 +70,57 @@ public class WebService {
      * use customize properties path and vertx options.
      *
      * @param propPath
+     * @param vertxOptions
      */
-    public static void launch(String propPath,VertxOptions vertxOptions) {
-        launchPre(propPath, vertxOptions);
+    public static void launch(String propPath, VertxOptions vertxOptions) {
+        launchPre(propPath, vertxOptions, false);
         launchVerticle();
         launchWebServer();
+    }
+
+    /**
+     * use customize vertx options.
+     *
+     * @param vertxOptions
+     */
+    public static void launch(VertxOptions vertxOptions) {
+        launchPre(null, vertxOptions, false);
+        launchVerticle();
+        launchWebServer();
+    }
+
+    /**
+     * use default config and launch with cluster.
+     */
+    public static void launchCluter() {
+        launchPre(null, null, true);
+    }
+
+    /**
+     * use customize propPath and launch with cluster.
+     *
+     * @param propPath
+     */
+    public static void launchCluter(String propPath) {
+        launchPre(propPath, null, true);
+    }
+
+    /**
+     * use customize propPath and vertx options launch with cluster.
+     *
+     * @param propPath
+     */
+    public static void launchCluter(String propPath, VertxOptions vertxOptions) {
+        launchPre(propPath, vertxOptions, true);
+    }
+
+    /**
+     * use customize vertx options and launch with cluster.
+     *
+     * @param vertxOptions
+     */
+    public static void launchCluter(VertxOptions vertxOptions) {
+        launchPre(null, vertxOptions, true);
     }
 
     private static void launchVerticle() {
