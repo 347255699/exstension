@@ -79,5 +79,5 @@ VertxUtils.sharedData();
 取得properties参数实例：
 ```java
 // JSON格式的properties参数
-VertxUtils.asJson();
+Config.asJson();
 ```
