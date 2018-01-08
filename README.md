@@ -14,19 +14,19 @@ new PackageScanner<Verticle>().scan("org.demo.verticle", Verticle.class)
                     Vertx.vertx().deployVerticle(verticle);
                  });
 ```
-加载某路径下的properties文件，可通过`SysConfigHolder`的静态方法`init`。（注意该路径应该为classpath下的相对路径）
+加载某路径下的properties文件，可通过`ConfigHolder`的静态方法`init`。（注意该路径应该为classpath下的相对路径）
 
 加载properties文件并取得所有配置参数实例：
 ```java
-SysConfigHolder.init("config.properties");
+ConfigHolder.init("config.properties");
 // 返回值为Map<String,Object>类型
-SysConfigHolder.properties();
+ConfigHolder.properties();
 ```
 若采用base提供的properties文件默认加载路径，调用`init`方法即可。默认加载路径为classpath路径下的`config.properties`。
 
 使用默认加载路径实例：
 ```java
-SysConfigHolder.init();
+ConfigHolder.init();
 ```
 
 ## web-launcher
