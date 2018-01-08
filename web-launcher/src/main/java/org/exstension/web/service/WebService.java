@@ -8,8 +8,8 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Router;
 import org.apache.commons.lang3.StringUtils;
 import org.exstension.base.PackageScanner;
-import org.exstension.web.Holder.SysHolder;
-import org.exstension.web.config.SysConfigHolder;
+import org.exstension.web.Util.VertxUtils;
+import org.exstension.web.config.Config;
 import org.exstension.web.route.Route;
 
 /**
@@ -27,18 +27,18 @@ public class WebService {
      */
     private static void launchPre(String propPath, VertxOptions vertxOptions, Boolean isCluster) {
         if (propPath != null)
-            SysConfigHolder.init(propPath);
-        else SysConfigHolder.init(null);
-        if (StringUtils.isNoneEmpty(SysConfigHolder.sysLoggingFactory()))
-            System.setProperty("vertx.logger-delegate-factory-class-name", SysConfigHolder.sysLoggingFactory());
+            Config.init(propPath);
+        else Config.init(null);
+        if (StringUtils.isNoneEmpty(Config.sysLoggingFactory()))
+            System.setProperty("vertx.logger-delegate-factory-class-name", Config.sysLoggingFactory());
         if (isCluster)
-            System.setProperty("hazelcast.logging.type", SysConfigHolder.hazelcastLoggingType());
+            System.setProperty("hazelcast.logging.type", Config.hazelcastLoggingType());
         // this step must after setting logger factory system property.
         logger = LoggerFactory.getLogger(WebService.class);
         if (isCluster) {
             Vertx.clusteredVertx(vertxOptions == null ? new VertxOptions() : vertxOptions, res -> {
                 if (res.succeeded()) {
-                    SysHolder.setVertx(res.result());
+                    VertxUtils.setVertx(res.result());
                     logger.info("launch vertx with cluster success.");
                     launchVerticle();
                     launchWebServer();
@@ -47,7 +47,7 @@ public class WebService {
                 }
             });
         } else {
-            SysHolder.setVertx(vertxOptions == null ? Vertx.vertx() : Vertx.vertx(vertxOptions));
+            VertxUtils.setVertx(vertxOptions == null ? Vertx.vertx() : Vertx.vertx(vertxOptions));
             logger.info("launch local vertx success.");
         }
     }
@@ -130,12 +130,12 @@ public class WebService {
     }
 
     private static void launchVerticle() {
-        if (!StringUtils.isEmpty(SysConfigHolder.sysVerticlePackage())) {
+        if (!StringUtils.isEmpty(Config.sysVerticlePackage())) {
             logger.info("all the verticle launch now.");
-            new PackageScanner<Verticle>().scan(SysConfigHolder.sysVerticlePackage(), Verticle.class)
+            new PackageScanner<Verticle>().scan(Config.sysVerticlePackage(), Verticle.class)
                     .forEach(verticle -> {
                         logger.info("deploy verticle -> ".concat(verticle.getClass().getName()));
-                        SysHolder.vertx().deployVerticle(verticle);
+                        VertxUtils.vertx().deployVerticle(verticle);
                     });
             logger.info("all the verticle launch over.");
         }
@@ -143,17 +143,17 @@ public class WebService {
 
     private static void launchWebServer() {
         logger.info("the web server launch now.");
-        Router router = Router.router(SysHolder.vertx());
-        if (!StringUtils.isEmpty(SysConfigHolder.sysVerticlePackage())) {
-            new PackageScanner<Route>().scan(SysConfigHolder.webRoutePackage(), Route.class)
+        Router router = Router.router(VertxUtils.vertx());
+        if (!StringUtils.isEmpty(Config.sysVerticlePackage())) {
+            new PackageScanner<Route>().scan(Config.webRoutePackage(), Route.class)
                     .forEach(route -> {
                         logger.info("deploy route -> ".concat(route.getClass().getName()));
                         route.route(router);
                     });
         }
-        int httpPort = StringUtils.isEmpty(SysConfigHolder.webListenPort()) ?
-                80 : Integer.parseInt(SysConfigHolder.webListenPort());
-        SysHolder.vertx().createHttpServer().requestHandler(router::accept)
+        int httpPort = StringUtils.isEmpty(Config.webListenPort()) ?
+                80 : Integer.parseInt(Config.webListenPort());
+        VertxUtils.vertx().createHttpServer().requestHandler(router::accept)
                 .listen(httpPort);
         logger.info("the web server launch over.");
         logger.info("the web server launch on ".concat(String.valueOf(httpPort)).concat(" port"));

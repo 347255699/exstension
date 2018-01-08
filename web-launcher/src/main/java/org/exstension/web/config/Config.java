@@ -2,20 +2,15 @@ package org.exstension.web.config;
 
 import io.vertx.core.json.JsonObject;
 import org.exstension.base.ConfigHolder;
+import org.exstension.web.Util.Constant;
 
 /**
  * config for this web system.
  * Created by kam on 2017/12/22.
  */
-public class SysConfigHolder {
-    private static String WEB_LISTEN_PORT = "web.listen.port";
-    private static String WEB_ROUTE_PACKAGE = "web.route.package";
-    private static String SYS_LOGGING_FACTORY = "sys.logging.factory";
-    private static String SYS_VERTICLE_PACKAGE = "sys.verticle.package";
-    private static String HAZELCAST_LOGGING_TYPE = "hazelcast.logging.type";
+public class Config {
 
     /**
-     * y
      * initialization system config.
      *
      * @param propPath
@@ -31,22 +26,22 @@ public class SysConfigHolder {
     }
 
     public static String sysLoggingFactory() {
-        return String.valueOf(ConfigHolder.val(SYS_LOGGING_FACTORY));
+        return ConfigHolder.val(Constant.SYS_LOGGING_FACTORY).toString();
     }
 
     public static String sysVerticlePackage() {
-        return String.valueOf(ConfigHolder.val(SYS_VERTICLE_PACKAGE));
+        return ConfigHolder.val(Constant.SYS_VERTICLE_PACKAGE).toString();
     }
 
     public static String webListenPort() {
-        return String.valueOf(ConfigHolder.val(WEB_LISTEN_PORT));
+        return ConfigHolder.val(Constant.WEB_LISTEN_PORT).toString();
     }
 
     public static String webRoutePackage() {
-        return String.valueOf(ConfigHolder.val(WEB_ROUTE_PACKAGE));
+        return ConfigHolder.val(Constant.WEB_ROUTE_PACKAGE).toString();
     }
 
     public static String hazelcastLoggingType() {
-        return String.valueOf(ConfigHolder.val(HAZELCAST_LOGGING_TYPE));
+        return ConfigHolder.val(Constant.HAZELCAST_LOGGING_TYPE).toString();
     }
 }
