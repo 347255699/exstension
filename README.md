@@ -64,12 +64,13 @@ WebService.launchCluster("config/config.properties");
 ```
 > 注意，启用集群模式前，确保classpath路径下已加载hazelcast.jar
 
-另外，该扩展包提供了Vertx对象的持有者，可通过`SysHolder`的静态方法`vertx()`来取得Vertx对象，同样可以通过`SysHolder`的静态方法`eventBus`来取得EventBus对象。
+另外，该扩展包提供了Vertx对象的持有者，可通过`VertxUtils`的静态方法`vertx()`来取得Vertx对象，同样可以通过`VertxUtils`的静态方法`eventBus`来取得EventBus对象等。
 
-取得Vertx和EventBus实例：
+取得Vertx、EventBus或SharedData实例：
 ```java
-SysHolder.vertx();
-SysHolder.eventBus();
+VertxUtils.vertx();
+VertxUtils.eventBus();
+VertxUtils.sharedData();
 ```
 取得Router对象，web-launcher默认通过`Route`接口的`route`方法来传递Router对象，你仅需要将Route扫描包下的对象实现`Route`接口，即可在`route`方法下取得Router对象。
 
@@ -78,5 +79,5 @@ SysHolder.eventBus();
 取得properties参数实例：
 ```java
 // JSON格式的properties参数
-SysConfigHolder.asJson();
+VertxUtils.asJson();
 ```
