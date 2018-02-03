@@ -1,75 +1,72 @@
 package org.exstension.base;
 
-import java.util.Enumeration;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 /**
- * the property file load utils.
+ * Loader for properties file.
  * Created by kam on 2017/12/3.
  */
 public class PropertiesLoader {
+    private final static String DEFAULT_PATH = "config/config.properties";
+    // Hold the properties body.
     private Properties prop;
+    // Hold the properties path blow classpath.
     private String propPath;
 
-    /**
-     * the propPath must blow classpath path.
-     *
-     * @param propPath
-     * @throws Throwable
-     */
-    public PropertiesLoader(String propPath) {
+    public PropertiesLoader(String propPath) throws IOException {
         this.prop = new Properties();
         this.propPath = propPath;
-        try {
-            prop.load(getClass().getClassLoader().getResourceAsStream(propPath));
-        } catch (Exception e) {
-            e.getCause().printStackTrace();
-        }
+        prop.load(getClass().getClassLoader().getResourceAsStream(this.propPath));
+    }
+
+    public PropertiesLoader() throws IOException {
+        this.prop = new Properties();
+        this.propPath = DEFAULT_PATH;
+        prop.load(getClass().getClassLoader().getResourceAsStream(this.propPath));
     }
 
     /**
-     * get current property file path or name.
+     * Get properties path blow classpath.
      *
      * @return
      */
     public String path() {
-        return propPath;
+        return this.propPath;
     }
 
     /**
-     * get properties object.
+     * Get properties body.
      *
      * @return
      */
     public Properties properties() {
-        return prop;
+        return this.prop;
     }
 
     /**
-     * get property with a key.
+     * Get the single property with a key from properties body.
      *
      * @param k
      * @return
      */
-    public String val(String k) {
-        return prop.getProperty(k);
+    public String property(String k) {
+        return this.prop.getProperty(k);
     }
 
     /**
-     * get property map from properties.
+     * Get properties body as map format.
      *
      * @return
      */
     public Map<String, Object> asMap() {
-        Map<String, Object> propertiesMap = new HashMap<>(prop.size(), 1f);
-        Enumeration enumeration = prop.propertyNames();
-        while (enumeration.hasMoreElements()) {
-            String key = (String) enumeration.nextElement();
-            propertiesMap.put(key, prop.getProperty(key));
-        }
-        return propertiesMap;
+        Map<String, Object> map = new HashMap<>(this.prop.size(), 1.0f);
+        this.prop.keySet().forEach(obj -> {
+            String k = (String) obj;
+            map.put(k, this.prop.get(k));
+        });
+        return map;
     }
-
 }

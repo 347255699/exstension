@@ -12,6 +12,8 @@ import org.exstension.web.Util.VertxUtils;
 import org.exstension.web.config.Config;
 import org.exstension.web.route.Route;
 
+import java.io.IOException;
+
 /**
  * launch service for web server.
  * Created by kam on 2017/12/10.
@@ -25,7 +27,7 @@ public class WebService {
      * @param vertxOptions
      * @param isCluster
      */
-    private static void launchPre(String propPath, VertxOptions vertxOptions, Boolean isCluster) {
+    private static void launchPre(String propPath, VertxOptions vertxOptions, Boolean isCluster) throws IOException {
         if (propPath != null)
             Config.init(propPath);
         else Config.init(null);
@@ -55,7 +57,7 @@ public class WebService {
     /**
      * use default config.
      */
-    public static void launch() {
+    public static void launch() throws IOException {
         launchPre(null, null, false);
         launchVerticle();
         launchWebServer();
@@ -66,7 +68,7 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launch(String propPath) {
+    public static void launch(String propPath) throws IOException {
         launchPre(propPath, null, false);
         launchVerticle();
         launchWebServer();
@@ -78,7 +80,7 @@ public class WebService {
      * @param propPath
      * @param vertxOptions
      */
-    public static void launch(String propPath, VertxOptions vertxOptions) {
+    public static void launch(String propPath, VertxOptions vertxOptions) throws IOException {
         launchPre(propPath, vertxOptions, false);
         launchVerticle();
         launchWebServer();
@@ -89,7 +91,7 @@ public class WebService {
      *
      * @param vertxOptions
      */
-    public static void launch(VertxOptions vertxOptions) {
+    public static void launch(VertxOptions vertxOptions) throws IOException {
         launchPre(null, vertxOptions, false);
         launchVerticle();
         launchWebServer();
@@ -98,7 +100,7 @@ public class WebService {
     /**
      * use default config and launch with cluster.
      */
-    public static void launchCluster() {
+    public static void launchCluster() throws IOException {
         launchPre(null, null, true);
     }
 
@@ -107,7 +109,7 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launchCluster(String propPath) {
+    public static void launchCluster(String propPath) throws IOException {
         launchPre(propPath, null, true);
     }
 
@@ -116,7 +118,7 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launchCluster(String propPath, VertxOptions vertxOptions) {
+    public static void launchCluster(String propPath, VertxOptions vertxOptions) throws IOException {
         launchPre(propPath, vertxOptions, true);
     }
 
@@ -125,7 +127,7 @@ public class WebService {
      *
      * @param vertxOptions
      */
-    public static void launchCluster(VertxOptions vertxOptions) {
+    public static void launchCluster(VertxOptions vertxOptions) throws IOException {
         launchPre(null, vertxOptions, true);
     }
 
