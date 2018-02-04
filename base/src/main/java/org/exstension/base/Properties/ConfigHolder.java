@@ -1,4 +1,4 @@
-package org.exstension.base;
+package org.exstension.base.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 

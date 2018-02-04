@@ -1,11 +1,11 @@
-package org.exstension.web.Util;
+package org.exstension.web;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.shareddata.SharedData;
 
 /**
- * hold some object for web service.
+ * Hold some instant from Vertx object.
  * Created by kam on 2017/12/22.
  */
 public class VertxUtils {
@@ -23,7 +23,7 @@ public class VertxUtils {
         return vertx.eventBus();
     }
 
-    public static SharedData sharedData(){
+    public static SharedData sharedData() {
         return vertx.sharedData();
     }
 }

@@ -1,4 +1,4 @@
-package org.exstension.base;
+package org.exstension.base.Properties;
 
 import java.io.IOException;
 import java.util.HashMap;
