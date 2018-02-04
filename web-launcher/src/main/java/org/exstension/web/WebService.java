@@ -1,5 +1,6 @@
 package org.exstension.web;
 
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.logging.Logger;
@@ -16,6 +17,7 @@ import java.io.IOException;
  */
 public class WebService {
     private static Logger logger;
+    private static DeploymentOptions options;
 
     /**
      * ready for launch web service.
@@ -154,7 +156,19 @@ public class WebService {
      */
     private static void launchWebServer() {
         WebVerticle webVerticle = new WebVerticle();
-        VertxUtils.vertx().deployVerticle(webVerticle, webVerticle.getDeploymentOptions());
+        if (options != null)
+            logger.info("Web-Launch ->> Using your options：" + options.getConfig().toString());
+
+        VertxUtils.vertx().deployVerticle(webVerticle, (options == null) ? webVerticle.getDeploymentOptions() : options);
+    }
+
+    /**
+     * Set your web server options.
+     *
+     * @param _options
+     */
+    public static void setWebServerOptions(DeploymentOptions _options) {
+        options = _options;
     }
 
 }
