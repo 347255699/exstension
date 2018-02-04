@@ -1,5 +1,7 @@
 package org.exstension.base;
 
+import org.demo.AbstractDemo;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
@@ -79,5 +81,11 @@ public class PackageScanner<T> {
             }
         }
         return classNames;
+    }
+
+    public static void main(String[] args) {
+        PackageScanner<AbstractDemo> scanner = new PackageScanner<>();
+        Set<AbstractDemo> scan = scanner.scan("org.demo", AbstractDemo.class);
+        scan.forEach(System.out::println);
     }
 }

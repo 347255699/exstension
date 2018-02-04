@@ -10,7 +10,7 @@ import java.util.Map;
  * Created by kam on 2017/12/3.
  */
 public class ConfigHolder {
-    // Hold properties body as mao format.
+    // Hold properties body as map format.
     private static Map<String, Object> PROPERTIES;
 
     public static void init(String propPath) throws IOException {
