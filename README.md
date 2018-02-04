@@ -33,7 +33,6 @@ ConfigHolder.properties();
 Step1，在propertes配置文件中配置参数
 
 propertes文件配置清单：
-* WebServerVerticle部署实例数量，若不配置默认为一个实例：web.server.instant.number=2
 * Http监听端口：web.listen.port=8080
 * Route对象扫描和实例化，Route对象所在的包：web.route.package=org.demo.route
 * Verticle对象部署，Verticle对象所在的包：sys.verticle.package=org.demo.verticle
@@ -78,10 +77,11 @@ VertxUtils.sharedData();
 ```
 取得Router对象，web-launcher默认通过`Route`接口的`route`方法来传递Router对象，你仅需要将Route扫描包下的对象实现`Route`接口，即可在`route`方法下取得Router对象。
 
-取得JSON格式的properties参数，通过`SysConfig`的静态方法`asJson`即可取得。
+`SysConfig`貯藏着一些有用的参数，如JSON格式的properties参数等。
 
-取得properties参数实例：
 ```java
 // JSON格式的properties参数
-Config.asJson();
+SysConfig.asJson();
+// 取得http接口的uri集
+SysConfig.httpUriSet();
 ```
