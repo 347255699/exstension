@@ -47,7 +47,7 @@ public class WebService {
             });
         } else {
             VertxUtils.setVertx(vertxOptions == null ? Vertx.vertx() : Vertx.vertx(vertxOptions));
-            logger.info("Web-Launch ->> Vertx Component success.");
+            logger.info("Web-Launch ->> Vertx Component already.");
         }
     }
 
