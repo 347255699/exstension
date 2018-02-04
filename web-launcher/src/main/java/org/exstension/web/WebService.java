@@ -1,6 +1,5 @@
 package org.exstension.web;
 
-import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.logging.Logger;
@@ -17,7 +16,6 @@ import java.io.IOException;
  */
 public class WebService {
     private static Logger logger;
-    private static DeploymentOptions options;
 
     /**
      * ready for launch web service.
@@ -26,10 +24,14 @@ public class WebService {
      * @param vertxOptions
      * @param isCluster
      */
-    private static void launchPre(String propPath, VertxOptions vertxOptions, Boolean isCluster) throws IOException {
-        if (propPath != null)
-            SysConfig.init(propPath);
-        else SysConfig.init(null);
+    private static void launchPre(String propPath, VertxOptions vertxOptions, Boolean isCluster) {
+        try {
+            if (propPath != null)
+                SysConfig.init(propPath);
+            else SysConfig.init(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (StringUtils.isNoneEmpty(SysConfig.getSysLoggingFactory()))
             System.setProperty("vertx.logger-delegate-factory-class-name", SysConfig.getSysLoggingFactory());
         if (isCluster)
@@ -56,7 +58,7 @@ public class WebService {
     /**
      * Using default config.
      */
-    public static void launch() throws IOException {
+    public static void launch() {
         launchPre(null, null, false);
         deployVerticleSet();
         launchWebServer();
@@ -67,7 +69,7 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launch(String propPath) throws IOException {
+    public static void launch(String propPath) {
         launchPre(propPath, null, false);
         deployVerticleSet();
         launchWebServer();
@@ -79,7 +81,7 @@ public class WebService {
      * @param propPath
      * @param vertxOptions
      */
-    public static void launch(String propPath, VertxOptions vertxOptions) throws IOException {
+    public static void launch(String propPath, VertxOptions vertxOptions) {
         launchPre(propPath, vertxOptions, false);
         deployVerticleSet();
         launchWebServer();
@@ -90,7 +92,7 @@ public class WebService {
      *
      * @param vertxOptions
      */
-    public static void launch(VertxOptions vertxOptions) throws IOException {
+    public static void launch(VertxOptions vertxOptions) {
         launchPre(null, vertxOptions, false);
         deployVerticleSet();
         launchWebServer();
@@ -99,8 +101,10 @@ public class WebService {
     /**
      * Using default config and launch with cluster.
      */
-    public static void launchCluster() throws IOException {
+    public static void launchCluster() {
         launchPre(null, null, true);
+        deployVerticleSet();
+        launchWebServer();
     }
 
     /**
@@ -108,8 +112,10 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launchCluster(String propPath) throws IOException {
+    public static void launchCluster(String propPath) {
         launchPre(propPath, null, true);
+        deployVerticleSet();
+        launchWebServer();
     }
 
     /**
@@ -117,8 +123,10 @@ public class WebService {
      *
      * @param propPath
      */
-    public static void launchCluster(String propPath, VertxOptions vertxOptions) throws IOException {
+    public static void launchCluster(String propPath, VertxOptions vertxOptions) {
         launchPre(propPath, vertxOptions, true);
+        deployVerticleSet();
+        launchWebServer();
     }
 
     /**
@@ -126,8 +134,10 @@ public class WebService {
      *
      * @param vertxOptions
      */
-    public static void launchCluster(VertxOptions vertxOptions) throws IOException {
+    public static void launchCluster(VertxOptions vertxOptions) {
         launchPre(null, vertxOptions, true);
+        deployVerticleSet();
+        launchWebServer();
     }
 
     /**
@@ -145,7 +155,7 @@ public class WebService {
                             VertxUtils.vertx().deployVerticle(v, v.getDeploymentOptions());
                         });
             } catch (IOException e) {
-                logger.error(e.getCause().getMessage());
+                logger.error(e.getMessage());
             }
             logger.info("Web-Launch ->> All the verticle deploy over.");
         }
@@ -155,20 +165,8 @@ public class WebService {
      * Launch Web Server
      */
     private static void launchWebServer() {
-        WebVerticle webVerticle = new WebVerticle();
-        if (options != null)
-            logger.info("Web-Launch ->> Using your options：" + options.getConfig().toString());
-
-        VertxUtils.vertx().deployVerticle(webVerticle, (options == null) ? webVerticle.getDeploymentOptions() : options);
+        VertxUtils.vertx().deployVerticle(WebVerticle.class.getName());
     }
 
-    /**
-     * Set your web server options.
-     *
-     * @param _options
-     */
-    public static void setWebServerOptions(DeploymentOptions _options) {
-        options = _options;
-    }
 
 }

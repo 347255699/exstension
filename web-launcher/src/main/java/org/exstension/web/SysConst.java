@@ -15,6 +15,4 @@ public class SysConst {
     public static String SYS_VERTICLE_PACKAGE = "sys.verticle.package";
     // Logger type for hazelcast.
     public static String HAZELCAST_LOGGING_TYPE = "hazelcast.logging.type";
-    // Web server instant number.
-    public static String WEB_SERVER_INSTANT_NUMBER = "web.server.instant.number";
 }
