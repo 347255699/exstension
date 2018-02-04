@@ -4,12 +4,15 @@ import io.vertx.core.json.JsonObject;
 import org.exstension.base.Properties.ConfigHolder;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * config for this web system.
  * Created by kam on 2017/12/22.
  */
 public class SysConfig {
+    private static Set<String> uriSet = new HashSet<>();
 
     /**
      * Initialization system config.
@@ -20,6 +23,14 @@ public class SysConfig {
         if (propPath == null)
             ConfigHolder.init();
         else ConfigHolder.init(propPath);
+    }
+
+    public static Set<String> httpUriSet() {
+        return uriSet;
+    }
+
+    public static boolean collectHttpUri(String uri) {
+        return uriSet.add(uri);
     }
 
     public static JsonObject asJson() {
