@@ -17,7 +17,7 @@ import java.io.IOException;
  * Created by kam on 2018/2/4.
  */
 public class WebVerticle extends SimpleAbstractVerticle {
-    private static Logger logger = LoggerFactory.getLogger(WebVerticle.class);
+    private static Logger logger;
 
     @Override
     public DeploymentOptions getDeploymentOptions() {
@@ -30,6 +30,7 @@ public class WebVerticle extends SimpleAbstractVerticle {
 
     @Override
     public void start() throws Exception {
+        logger = LoggerFactory.getLogger(WebVerticle.class);
         logger.info("Web-Launch ->> Web server launch now.");
         Router router = Router.router(VertxUtils.vertx());
         if (!StringUtils.isEmpty(SysConfig.getSysVerticlePackage())) {
