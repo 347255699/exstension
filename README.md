@@ -33,6 +33,7 @@ ConfigHolder.properties();
 Step1，在propertes配置文件中配置参数
 
 propertes文件配置清单：
+* WebServerVerticle部署实例数量，若不配置默认为一个实例：web.server.instant.number=2
 * Http监听端口：web.listen.port=8080
 * Route对象扫描和实例化，Route对象所在的包：web.route.package=org.demo.route
 * Verticle对象部署，Verticle对象所在的包：sys.verticle.package=org.demo.verticle

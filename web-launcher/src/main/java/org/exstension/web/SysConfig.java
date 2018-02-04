@@ -45,4 +45,8 @@ public class SysConfig {
     public static String getHazelcastLoggingType() {
         return ConfigHolder.property(SysConst.HAZELCAST_LOGGING_TYPE).toString();
     }
+
+    public static String getWebServerInstantNumber() {
+        return ConfigHolder.property(SysConst.WEB_SERVER_INSTANT_NUMBER).toString();
+    }
 }
