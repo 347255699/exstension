@@ -154,7 +154,7 @@ public class WebService {
                             logger.info("Web-Launch ->> Deploy verticle:" + v.getClass().getSimpleName());
                             VertxUtils.vertx().deployVerticle(v, v.getDeploymentOptions());
                         });
-            } catch (IOException e) {
+            } catch (Exception e) {
                 logger.error(e.getMessage());
             }
             logger.info("Web-Launch ->> All the verticle deploy over.");
@@ -174,7 +174,7 @@ public class WebService {
                             logger.info("Web-Launch ->> Deploy route:" + route.getClass().getSimpleName() + ".");
                             route.route(router);
                         });
-            } catch (IOException e) {
+            } catch (Exception e) {
                 logger.error(e.getMessage());
             }
         }

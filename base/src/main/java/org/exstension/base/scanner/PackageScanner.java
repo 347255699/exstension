@@ -19,7 +19,7 @@ public interface PackageScanner {
      * @return
      * @throws IOException
      */
-    Set<String> classNames(String packageName, String except, String except2) throws IOException;
+    Set<String> classNames(String packageName, String except, String except2) throws Exception;
 
     /**
      * Find target element blow package except single class name.
@@ -29,7 +29,7 @@ public interface PackageScanner {
      * @return
      * @throws IOException
      */
-    Set<String> classNames(String packageName, String except) throws IOException;
+    Set<String> classNames(String packageName, String except) throws Exception;
 
     /**
      * Scanning target class blow package except @param except and @param except2 class.
@@ -39,7 +39,7 @@ public interface PackageScanner {
      * @param except2
      * @return
      */
-    Set<?> scan(String packageName, Class<?> except, Class<?> except2) throws IOException;
+    Set<?> scan(String packageName, Class<?> except, Class<?> except2) throws Exception;
 
     /**
      * Scanning target class blow package except @param except class.
@@ -48,7 +48,7 @@ public interface PackageScanner {
      * @param except
      * @return
      */
-    Set<?> scan(String packageName, Class<?> except) throws IOException;
+    Set<?> scan(String packageName, Class<?> except) throws Exception;
 
     /**
      * Instantiation a class set.
